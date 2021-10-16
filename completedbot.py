@@ -1,5 +1,3 @@
-# Needs auto roles
-
 import discord
 from discord.colour import Color
 from discord.ext import commands, tasks
@@ -72,11 +70,18 @@ async def pipreminder():
         await channel.send("If you're having any issues with pip, check out <#895483227244994641>\n`Automated Message`")
         print(f"{Fore.GREEN}Sent pip reminder to {Fore.MAGENTA}{channel}\n{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Fore.RESET}")
 
-
 @bot.event
 async def on_member_join(member):
+    
     # Welcome message channel id
     wlc_channel = bot.get_channel(898420446125490186)
+    
+    # Role we want to add automatically
+    wlc_role = "Member"
+    role = discord.utils.get(member.guild.roles, name=wlc_role)
+    await member.add_roles(role)
+
+   
     embed = discord.Embed(title=f"Welcome {member.name}!", color = discord.colour.Color.from_rgb(255,192,203)).set_author(name=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
     embed.add_field(name="Thank you for joining the server!", value=f"If you have any questions please check out <#895483227244994641> before asking in any support channels, also, please read\
     your code before asking, it saves ours and your time. If you're having an error with any code from a video, please ask in <#894746091382272000> -- Thank you :)", inline=True)
